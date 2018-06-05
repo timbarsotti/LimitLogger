@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>LIMIT_LOG_MAX_ONCE_STOP_EXCEPTION</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>LIMIT_LOG_MAX_ONCE_STOP_EXCEPTION</shortDescription>
+        <value>Limit Logger can be stopped at most one time per log. This Limit Log has already been stopped.</value>
+    </labels>
+    <labels>
+        <fullName>STOP_INITIAL_LOG_BEFORE_COMMIT</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>STOP_INITIAL_LOG_BEFORE_COMMIT</shortDescription>
+        <value>You must stop the first limit logger prior to committing.</value>
+    </labels>
+</CustomLabels>

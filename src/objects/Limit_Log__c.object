@@ -54,6 +54,8 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Aggregate_Queries_Limit__c</fullName>
+        <description>The limit of Aggregate_Queries that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Aggregate_Queries that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Aggregate Queries Limit</label>
         <precision>18</precision>
@@ -67,6 +69,8 @@
     <fields>
         <fullName>Aggregate_Queries_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Aggregate Queries used during this log period</description>
+        <inlineHelpText>Aggregate Queries used during this log period</inlineHelpText>
         <label>Aggregate Queries Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -78,6 +82,8 @@
     </fields>
     <fields>
         <fullName>Async_Calls_Limit__c</fullName>
+        <description>The limit of Async_Calls that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Async_Calls that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Async Calls Limit</label>
         <precision>18</precision>
@@ -91,6 +97,8 @@
     <fields>
         <fullName>Async_Calls_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Async Calls used during this log period</description>
+        <inlineHelpText>Async Calls used during this log period</inlineHelpText>
         <label>Async Calls Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -101,7 +109,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Batchable__c</fullName>
+        <description>Was this logged during a batch context</description>
+        <inlineHelpText>Was this logged during a batch context</inlineHelpText>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Batchable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CPU_Time_Limit__c</fullName>
+        <description>The limit of CPU_Time that can be performed in this type of context</description>
+        <inlineHelpText>The limit of CPU_Time that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>CPU Time Limit</label>
         <precision>18</precision>
@@ -115,6 +136,8 @@
     <fields>
         <fullName>CPU_Time_Used__c</fullName>
         <externalId>false</externalId>
+        <description>CPU Time used during this log period</description>
+        <inlineHelpText>CPU Time used during this log period</inlineHelpText>
         <label>CPU Time Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -126,6 +149,8 @@
     </fields>
     <fields>
         <fullName>Callouts_Limit__c</fullName>
+        <description>The limit of Callouts that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Callouts that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Callouts Limit</label>
         <precision>18</precision>
@@ -139,6 +164,8 @@
     <fields>
         <fullName>Callouts_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Callouts used during this log period</description>
+        <inlineHelpText>Callouts used during this log period</inlineHelpText>
         <label>Callouts Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -149,7 +176,219 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Cumulative_Aggregate_Queries_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Aggregate Queries used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Aggregate Queries used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Aggregate Queries Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Async_Calls_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Async Calls used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Async Calls used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Async Calls Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_CPU_Time_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative CPU Time used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative CPU Time used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative CPU Time Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Callouts_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Callouts used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Callouts used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Callouts Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_DML_Rows_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative DML Rows used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative DML Rows used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative DML Rows Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_DML_Statements_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative DML Statements used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative DML Statements used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative DML Statements Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Email_Invocations_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Email Invocations used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Email Invocations used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Email Invocations Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Future_Calls_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Future Calls used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Future Calls used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Future Calls Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Heap_Size_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Heap Size used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Heap Size used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Heap Size Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Mobile_Push_Apex_Calls_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Mobile Push Apex Calls used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Mobile Push Apex Calls used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Mobile Push Apex Calls Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Queries_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Queries used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Queries used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Queries Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Query_Locator_Rows_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Query Locator Rows used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Query Locator Rows used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Query Locator Rows Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Query_Rows_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Query Rows used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Query Rows used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Query Rows Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Queueable_Jobs_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Queueable Jobs used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Queueable Jobs used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Queueable Jobs Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cumulative_Sosl_Queries_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Cumulative Sosl Queries used up until this point in the execution context.</description>
+        <inlineHelpText>Cumulative Sosl Queries used up until this point in the execution context</inlineHelpText>
+        <label>Cumulative Sosl Queries Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>DML_Rows_Limit__c</fullName>
+        <description>The limit of DML Rows that can be performed in this type of context</description>
+        <inlineHelpText>The limit of DML Rows that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>DML Rows Limit</label>
         <precision>18</precision>
@@ -163,6 +402,8 @@
     <fields>
         <fullName>DML_Rows_Used__c</fullName>
         <externalId>false</externalId>
+        <description>DML Rows used during this log period</description>
+        <inlineHelpText>DML Rows used during this log period</inlineHelpText>
         <label>DML Rows Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -174,6 +415,8 @@
     </fields>
     <fields>
         <fullName>DML_Statements_Limit__c</fullName>
+        <description>The limit of DML Statements that can be performed in this type of context</description>
+        <inlineHelpText>The limit of DML Statements that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>DML Statements Limit</label>
         <precision>18</precision>
@@ -187,6 +430,8 @@
     <fields>
         <fullName>DML_Statements_Used__c</fullName>
         <externalId>false</externalId>
+        <description>DML Statements used during this log period</description>
+        <inlineHelpText>DML Statements used during this log period</inlineHelpText>
         <label>DML Statements Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -198,6 +443,8 @@
     </fields>
     <fields>
         <fullName>Email_Invocations_Limit__c</fullName>
+        <description>The limit of Email Invocations that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Email Invocations that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Email Invocations Limit</label>
         <precision>18</precision>
@@ -211,6 +458,8 @@
     <fields>
         <fullName>Email_Invocations_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Email Invocations used during this log period</description>
+        <inlineHelpText>Email Invocations used during this log period</inlineHelpText>
         <label>Email Invocations Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -233,6 +482,8 @@
     </fields>
     <fields>
         <fullName>Future_Calls_Limit__c</fullName>
+        <description>The limit of Future Calls that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Future Calls that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Future Calls Limit</label>
         <precision>18</precision>
@@ -246,6 +497,8 @@
     <fields>
         <fullName>Future_Calls_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Future Calls used during this log period</description>
+        <inlineHelpText>Future Calls used during this log period</inlineHelpText>
         <label>Future Calls Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -256,7 +509,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Future__c</fullName>
+        <description>Was this logged during a future context</description>
+        <inlineHelpText>Was this logged during a future context</inlineHelpText>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Future</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Heap_Size_Limit__c</fullName>
+        <description>The limit of Heap Size that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Heap Size that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Heap Size Limit</label>
         <precision>18</precision>
@@ -270,6 +536,8 @@
     <fields>
         <fullName>Heap_Size_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Heap Size used during this log period</description>
+        <inlineHelpText>Heap Size used during this log period</inlineHelpText>
         <label>Heap Size Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -280,7 +548,33 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Log_Start_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Log Start Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Log_Stop_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Log Stop Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Mobile_Push_Apex_Calls_Limit__c</fullName>
+        <description>The limit of Mobile Push Apex Calls that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Mobile Push Apex Calls that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Mobile Push Apex Calls Limit</label>
         <precision>18</precision>
@@ -294,6 +588,8 @@
     <fields>
         <fullName>Mobile_Push_Apex_Calls_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Mobile Push Apex Calls used during this log period</description>
+        <inlineHelpText>Mobile Push Apex Calls used during this log period</inlineHelpText>
         <label>Mobile Push Apex Calls Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -305,6 +601,8 @@
     </fields>
     <fields>
         <fullName>Queries_Limit__c</fullName>
+        <description>The limit of Queries that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Queries that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Queries Limit</label>
         <precision>18</precision>
@@ -318,6 +616,8 @@
     <fields>
         <fullName>Queries_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Queries used during this log period</description>
+        <inlineHelpText>Queries used during this log period</inlineHelpText>
         <label>Queries Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -328,19 +628,9 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Query_Limit__c</fullName>
-        <externalId>false</externalId>
-        <label>Query Limit</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Query_Locator_Rows_Limit__c</fullName>
+        <description>The limit of Query Locator Rows that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Query Locator Rows that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Query Locator Rows Limit</label>
         <precision>18</precision>
@@ -354,7 +644,37 @@
     <fields>
         <fullName>Query_Locator_Rows_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Query Locator Rows used during this log period</description>
+        <inlineHelpText>Query Locator Rows used during this log period</inlineHelpText>
         <label>Query Locator Rows Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Query_Rows_Limit__c</fullName>
+        <description>The limit of Query Rows that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Query Rows that can be performed in this type of context</inlineHelpText>
+        <externalId>false</externalId>
+        <label>Query Rows Limit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Query_Rows_Used__c</fullName>
+        <externalId>false</externalId>
+        <description>Query Rows used during this log period</description>
+        <inlineHelpText>Query Rows used during this log period</inlineHelpText>
+        <label>Query Rows Used</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -377,6 +697,8 @@
     </fields>
     <fields>
         <fullName>Queueable_Jobs_Limit__c</fullName>
+        <description>The limit of Queueable Jobs that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Queueable Jobs that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Queueable Jobs Limit</label>
         <precision>18</precision>
@@ -390,6 +712,8 @@
     <fields>
         <fullName>Queueable_Jobs_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Queueable Jobs used during this log period</description>
+        <inlineHelpText>Queueable Jobs used during this log period</inlineHelpText>
         <label>Queueable Jobs Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -398,6 +722,17 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Queueable__c</fullName>
+        <description>Was this logged during a Queueable context</description>
+        <inlineHelpText>Was this logged during a Queueable context</inlineHelpText>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Queueable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Records_Processed__c</fullName>
@@ -412,7 +747,230 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Remaining_Aggregate_Queries__c</fullName>
+        <externalId>false</externalId>
+        <formula>Aggregate_Queries_Limit__c - Aggregate_Queries_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Aggregate Queries</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Async_Calls__c</fullName>
+        <externalId>false</externalId>
+        <formula>Async_Calls_Limit__c - Async_Calls_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Async Calls</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_CPU_Time__c</fullName>
+        <externalId>false</externalId>
+        <formula>CPU_Time_Limit__c - CPU_Time_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining CPU Time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Callouts__c</fullName>
+        <externalId>false</externalId>
+        <formula>Callouts_Limit__c - Callouts_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Callouts</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_DML_Rows__c</fullName>
+        <externalId>false</externalId>
+        <formula>DML_Rows_Limit__c - DML_Rows_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining DML Rows</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_DML_Statements__c</fullName>
+        <externalId>false</externalId>
+        <formula>DML_Statements_Limit__c - DML_Statements_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining DML Statements</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Email_Invocations__c</fullName>
+        <externalId>false</externalId>
+        <formula>Email_Invocations_Limit__c - Email_Invocations_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Email Invocations</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Future_Calls__c</fullName>
+        <externalId>false</externalId>
+        <formula>Future_Calls_Limit__c - Future_Calls_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Future Calls</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Heap_Size__c</fullName>
+        <externalId>false</externalId>
+        <formula>Heap_Size_Limit__c - Heap_Size_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Heap Size</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Mobile_Push_Apex_Calls__c</fullName>
+        <externalId>false</externalId>
+        <formula>Mobile_Push_Apex_Calls_Limit__c - Mobile_Push_Apex_Calls_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Mobile Push Apex Calls</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Queries__c</fullName>
+        <externalId>false</externalId>
+        <formula>Queries_Limit__c - Queries_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Queries</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Query_Locator_Rows__c</fullName>
+        <externalId>false</externalId>
+        <formula>Query_Locator_Rows_Limit__c - Query_Locator_Rows_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Query Locator Rows</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Query_Rows__c</fullName>
+        <externalId>false</externalId>
+        <formula>Query_Rows_Limit__c - Query_Rows_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Query Rows</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Queueable_Jobs__c</fullName>
+        <externalId>false</externalId>
+        <formula>Queueable_Jobs_Limit__c - Queueable_Jobs_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Queueable Jobs</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Sosl_Queries__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sosl_Queries_Limit__c - Sosl_Queries_Used__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Sosl Queries</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Scheduled__c</fullName>
+        <description>Was this logged during a scheduled context</description>
+        <inlineHelpText>Was this logged during a scheduled context</inlineHelpText>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Scheduled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sosl_Queries_Limit__c</fullName>
+        <description>The limit of Sosl_Queries that can be performed in this type of context</description>
+        <inlineHelpText>The limit of Sosl_Queries that can be performed in this type of context</inlineHelpText>
         <externalId>false</externalId>
         <label>Sosl Queries Limit</label>
         <precision>18</precision>
@@ -426,6 +984,8 @@
     <fields>
         <fullName>Sosl_Queries_Used__c</fullName>
         <externalId>false</externalId>
+        <description>Sosl Queries used during this log period</description>
+        <inlineHelpText>Sosl Queries used during this log period</inlineHelpText>
         <label>Sosl Queries Used</label>
         <precision>18</precision>
         <required>false</required>
@@ -435,7 +995,66 @@
         <type>Number</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Time</label>
+        <description>Real time in milliseconds used to process this log period</description>
+        <inlineHelpText>Real time in milliseconds used to process this log period</inlineHelpText>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transaction__c</fullName>
+        <externalId>false</externalId>
+        <label>Transaction #</label>
+        <description>Transaction # for the execution context. Log with same transaction number were created in the same execution context</description>
+        <inlineHelpText>Transaction # for the execution context. Log with same transaction number were created in the same execution context</inlineHelpText>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>10</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wrapper_Limit_Log__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is populated if there is a parent log associated to this log - e.g. multiple logs in the same execution context</description>
+        <inlineHelpText>This is populated if there is a parent log associated to this log - e.g. multiple logs in the same execution context</inlineHelpText>
+        <externalId>false</externalId>
+        <label>Wrapper Limit Log</label>
+        <referenceTo>Limit_Log__c</referenceTo>
+        <relationshipLabel>Limit Logs</relationshipLabel>
+        <relationshipName>Limit_Logs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <label>Limit Log</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Event_Name__c</columns>
+        <columns>CPU_Time_Limit__c</columns>
+        <columns>Time__c</columns>
+        <columns>CPU_Time_Used__c</columns>
+        <columns>Queueable__c</columns>
+        <columns>Batchable__c</columns>
+        <columns>Transaction__c</columns>
+        <columns>Log_Stop_Order__c</columns>
+        <columns>Log_Start_Order__c</columns>
+        <columns>Wrapper_Limit_Log__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>LL-{0000000}</displayFormat>
         <label>Limit Log</label>
