@@ -215,7 +215,7 @@ public class LimitLogger {
 	/**
 	* Starts the current log and resets the initial values to zero
 	*/
-	public void start() {
+	private void start() {
 		if(!limitLoggerEnabled) { return;}
 		this.startTime 						= System.now().getTime();
 		this.initialAggregateQueries 		= LIMITS.getAggregateQueries();
@@ -238,7 +238,7 @@ public class LimitLogger {
 	/**
 	*  Saves the log: either adds to the static variable to commit later or if it is the initial log in the stack it will commit all of them.
 	*/
-	private void commitAll() {
+	public void commitAll() {
 		if(commitLogs && initialLog.stopped == true) {
 			Savepoint sp = Database.setSavepoint();
 
@@ -301,7 +301,7 @@ public class LimitLogger {
 						if(superLog.Log_Stop_Order__c <= subLog.Log_Stop_Order__c) {
 							continue; //
 						}
-						//known issue - will update even if it doesn't need to due to the way it loops through the super / sub set
+						//TODO - known issue - will update even if it doesn't need to due to the way it loops through the super / sub set
 						if(subLog.Wrapper_Limit_Log__c != superLog.Id) { 
 							subLog.Wrapper_Limit_Log__c = superLog.Id;
 							toUpdateMap.put(subLog.Id, subLog);
@@ -315,7 +315,7 @@ public class LimitLogger {
 	/**
 	*  Initializes the limit log record
 	*/
-	public void initializeLimitLogRecord() {
+	private void initializeLimitLogRecord() {
 
 		this.record = new Limit_Log__c(
 			Log_Start_Order__c 				= logStartOrder,
@@ -343,25 +343,25 @@ public class LimitLogger {
 		);
 	}
 
-	public static Integer limitAggregateQueries = LIMITS.getLimitAggregateQueries();
-	public static Integer limitAsyncCalls = LIMITS.getLimitAsyncCalls();
-	public static Integer limitCallouts = LIMITS.getLimitCallouts();
-	public static Integer limitCpuTime = LIMITS.getLimitCpuTime();
-	public static Integer limitDMLRows = LIMITS.getLimitDMLRows();
-	public static Integer limitDMLStatements = LIMITS.getLimitDMLStatements();
-	public static Integer limitEmailInvocations = LIMITS.getLimitEmailInvocations();
-	public static Integer limitFutureCalls = LIMITS.getLimitFutureCalls();
-	public static Integer limitHeapSize = LIMITS.getLimitHeapSize();
-	public static Integer limitMobilePushApexCalls = LIMITS.getLimitMobilePushApexCalls();
-	public static Integer limitQueries = LIMITS.getLimitQueries();
-	public static Integer limitQueryLocatorRows = LIMITS.getLimitQueryLocatorRows();
-	public static Integer limitQueryRows = LIMITS.getLimitQueryRows();
-	public static Integer limitQueueableJobs = LIMITS.getLimitQueueableJobs();
-	public static Integer limitSoslQueries = LIMITS.getLimitSoslQueries();
-	public static Boolean queueable = System.isQueueable();
-	public static Boolean future = System.isFuture();
-	public static Boolean scheduled = System.isScheduled();
-	public static Boolean batchable = System.isBatch();
+	private static Integer limitAggregateQueries = LIMITS.getLimitAggregateQueries();
+	private static Integer limitAsyncCalls = LIMITS.getLimitAsyncCalls();
+	private static Integer limitCallouts = LIMITS.getLimitCallouts();
+	private static Integer limitCpuTime = LIMITS.getLimitCpuTime();
+	private static Integer limitDMLRows = LIMITS.getLimitDMLRows();
+	private static Integer limitDMLStatements = LIMITS.getLimitDMLStatements();
+	private static Integer limitEmailInvocations = LIMITS.getLimitEmailInvocations();
+	private static Integer limitFutureCalls = LIMITS.getLimitFutureCalls();
+	private static Integer limitHeapSize = LIMITS.getLimitHeapSize();
+	private static Integer limitMobilePushApexCalls = LIMITS.getLimitMobilePushApexCalls();
+	private static Integer limitQueries = LIMITS.getLimitQueries();
+	private static Integer limitQueryLocatorRows = LIMITS.getLimitQueryLocatorRows();
+	private static Integer limitQueryRows = LIMITS.getLimitQueryRows();
+	private static Integer limitQueueableJobs = LIMITS.getLimitQueueableJobs();
+	private static Integer limitSoslQueries = LIMITS.getLimitSoslQueries();
+	private static Boolean queueable = System.isQueueable();
+	private static Boolean future = System.isFuture();
+	private static Boolean scheduled = System.isScheduled();
+	private static Boolean batchable = System.isBatch();
 	/**
 	*  Updates the log with the current and cumulative usage
 	*/
