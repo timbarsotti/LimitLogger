@@ -8,32 +8,33 @@ public class LimitLoggerTest {
 	public static void testNestedStops() {
 		LimitLogger.commitLogs = true;
 		LimitLogger outerLL = new LimitLogger('outer');
-		outerLL.start();
 		LimitLogger innerLL = new LimitLogger('inner');
-		innerLL.start();
 		innerLL.stop();
 		outerLL.stop();
-
+		outerLL.commitAll();
 		List<Limit_Log__c> limitLogs = [SELECT Id, DML_Statements_Used__c, DML_Rows_Used__c FROM Limit_Log__c];
+
 		System.assert(limitlogs.size() == 2, limitlogs.size());
 		for(Limit_Log__c ll: limitlogs) {
 			System.assert(ll.DML_Statements_Used__c == 0);
 			System.assert(ll.DML_Rows_Used__c == 0);
 		}
-		System.assert(LIMITS.getDMLRows() == 5, LIMITS.getDMLRows());  
-		System.assert(LIMITS.getDMLStatements() == 3, LIMITS.getDMLStatements()); //1 for insert, 1 for update, 1 for savepoint
+		System.assert(LIMITS.getDMLRows() == 3, LIMITS.getDMLRows());  //2 logs, 1 savepoint
+		System.assert(LIMITS.getDMLStatements() == 2, LIMITS.getDMLStatements()); //1 for insert, 1 for savepoint
 	}
 
+	//TODO - unit test for hieracrhy 
+
+	//TODO - unit test for custom setting driven Auto_Commit_When_Initial_Is_Stopped__c
 	@isTest
 	public static void testMultipleStops() {
 		LimitLogger.debugLogs = true;
 		Boolean stopError, startError;
 		LimitLogger ll = new LimitLogger(null) ;
-		ll.start();
 		ll.stop();
 
 		try {
-			ll.start();
+			//ll.start(); -- deprecated
 		} catch (LimitLogger.LimitLoggerException lle) {
 			startError = true;
 		}
@@ -46,7 +47,7 @@ public class LimitLoggerTest {
 		System.assert(stopError == true, 'Failed to throw exception of multiple stops');
 	}
 	@isTest 
-	public static void testLimits() {
+	public static void testLimits() { 
 		LimitLogger.commitLogs = true;
 		LimitLogger outerLL = new LimitLogger(null);
 
