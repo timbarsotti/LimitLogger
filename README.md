@@ -13,7 +13,8 @@ If LimitLogger is enabled, each LimitLogger that is constructed will create a Li
 "Commit Logs To Database" -> determines if the Limit Logs get committed to the database<br/>
 "Debug Limits" -> determines if the Limit Logs are printed in the debug logs<br/>
 If neither is set to true, limit logger doesn't do anything. <br/>
-"Auto Commit When Initial Is Stopped" - Auto commit the logs when the initial log is stopped. Without this being set to true, you must call the "commitAll" method in order to commit the logs. This might be helpful to disable when you are using certain trigger architectures that would initalize multiple initial logs for a single execution context.
+"Auto Commit When Initial Is Stopped" - Auto commit the logs when the initial log is stopped. Without this being set to true, you must call the "commitAll" method in order to commit the logs. This might be helpful to disable when you are using certain trigger architectures that would initalize multiple initial logs for a single execution context.<br/>
+"Set Wrapper Relationships Between Logs" - The wrapper relationship sets parent child relationships between the log limits. This will consume an extra DML statement and the corresponding number of DML rows. <br/>
 
 
 # Usage
