@@ -13,6 +13,7 @@ If LimitLogger is enabled, each LimitLogger that is constructed will create a Li
 "Commit Logs To Database" -> determines if the Limit Logs get committed to the database<br/>
 "Debug Limits" -> determines if the Limit Logs are printed in the debug logs<br/>
 If neither is set to true, limit logger doesn't do anything. <br/>
+"Auto Commit When Initial Is Stopped" - Auto commit the logs when the initial log is stopped. Without this being set to true, you must call the "commitAll" method in order to commit the logs. This might be helpful to disable when you are using certain trigger architectures that would initalize multiple initial logs for a single execution context.
 
 
 # Usage
@@ -24,6 +25,9 @@ You can add multiple limit logs by constructing them
 To stop the log call the stop method. Stopping prints the log limits immediately to the debug log.
 ```javascript
     ll.stop();
+    
+    //if you have Auto Commit set to false - you will need to call commit all explicitly 
+    ll.commitAll(); 
 ```
 
     
@@ -38,6 +42,8 @@ public void methodOne() {
     methodTwo();
     //stop and commit - commits logs here because the initial was stopped
     intialLog.stop();
+    //if you have Auto Commit set to false - you will need to call commit all explicitly 
+    intialLog.commitAll(); 
 }
 
 public void methodTwo() {
@@ -45,6 +51,10 @@ public void methodTwo() {
     LimitLogger secondLog = new LimitLogger('My Seconc Log'); 
     //stop and commit - doesn't commit logs here because the inital wasn't stopped
     secondLog.stop();
+
+    //if you have Auto Commit set to false - you will need to call commit all explicitly 
+    //NOTE: this won't do anything because the initial log has has been stopped.
+    secondLog.commitAll(); 
 }
 ```
 
@@ -56,6 +66,9 @@ If you want to execute a block of code and have it generate the logs without ena
   LimitLogger log = new LimitLogger('My Log');
   //do something
   intialLog.stop();
+
+  //if you have Auto Commit set to false - you will need to call commit all explicitly 
+  intialLog.commitAll(); 
 ```
 # TODO Improvement List
 1) Add permission set for objects / fields
