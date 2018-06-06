@@ -14,6 +14,8 @@
     </fields>
     <fields>
         <fullName>Commit_Logs_To_Database__c</fullName>
+        <description>Determines if the Limit Logs are committed to the Limit Log object. Can also be programmatically set via LimitLogger.commitLogs = true</description>
+        <inlineHelpText>Determines if the Limit Logs are committed to the Limit Log object. Can also be programmatically set via LimitLogger.commitLogs = true</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Commit Logs To Database</label>
@@ -22,9 +24,21 @@
     </fields>
     <fields>
         <fullName>Debug_Limits__c</fullName>
+        <description>Determines if the Limit Logs are printed in the debug logs. Can also be programmatically set via LimitLogger.debugLogs = true</description>
+        <inlineHelpText>Determines if the Limit Logs are printed in the debug logs. Can also be programmatically set via LimitLogger.debugLogs = true</inlineHelpText>
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Debug Limits</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Set_Wrapper_Relationships_Between_Logs__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>The wrapper relationship sets parent child relationships between the log limits. This will consume an extra DML statement and the corresponding number of DML rows.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The wrapper relationship sets parent child relationships between the log limits. This will consume an extra DML statement and the corresponding number of DML rows.</inlineHelpText>
+        <label>Set Wrapper Relationships Between Logs</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

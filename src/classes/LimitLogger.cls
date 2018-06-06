@@ -244,14 +244,17 @@ public class LimitLogger {
 
 			try {
 				insert uncommittedRecords;
-				allWorkingRecords.addAll(uncommittedRecords);
-				
+				if(limitLoggerSettings.Set_Wrapper_Relationships_Between_Logs__c) {
+					allWorkingRecords.addAll(uncommittedRecords);
+					List<Limit_Log__c> toUpdate = setParentChildRelations(allWorkingRecords);
+					update toUpdate;
+				}
+
 				uncommittedRecords = new List<Limit_Log__c>();
 
 				//establish parent child relationship
 				//sort by max spread
-				List<Limit_Log__c> toUpdate = setParentChildRelations(allWorkingRecords);
-				update toUpdate;
+				
 
 				initialLog = null;
 			} catch (exception e) {
