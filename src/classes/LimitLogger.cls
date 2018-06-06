@@ -207,7 +207,9 @@ public class LimitLogger {
 
 		printLimits();
 		addLogToList();
-		commitAll();
+		if(limitLoggerSettings.Auto_Commit_When_Initial_Is_Stopped__c) {
+			commitAll();
+		}
 	}
 
 	/**
@@ -241,13 +243,17 @@ public class LimitLogger {
 			Savepoint sp = Database.setSavepoint();
 
 			try {
-				insert records;
+				insert uncommittedRecords;
+				allWorkingRecords.addAll(uncommittedRecords);
+				
+				uncommittedRecords = new List<Limit_Log__c>();
+
 				//establish parent child relationship
 				//sort by max spread
-				setParentChildRelations(records);
-				update records;
+				List<Limit_Log__c> toUpdate = setParentChildRelations(allWorkingRecords);
+				update toUpdate;
+
 				initialLog = null;
-				records = new List<Limit_Log__c>();
 			} catch (exception e) {
 				System.debug(e);
 				Database.rollback(sp);
@@ -261,11 +267,15 @@ public class LimitLogger {
 			}
 		}
 	}
-	private void setParentChildRelations(List<Limit_Log__c> records) {
+	private List<Limit_Log__c> setParentChildRelations(List<Limit_Log__c> records) {
+		Map<Id, Limit_Log__c> toUpdateMap = new Map<Id, Limit_Log__c>();
 		Map<Integer, List<Limit_Log__c>> limitLogBySpread = new Map<Integer, List<Limit_Log__c>>();
 		for(Limit_Log__c ll: records) {
 			if(ll.Id == initialLog.record.Id) { continue; }
-			ll.Wrapper_Limit_Log__c = initialLog.record.Id;
+			if(ll.Wrapper_Limit_Log__c == null) {
+				ll.Wrapper_Limit_Log__c = initialLog.record.Id;
+				toUpdateMap.put(ll.Id, ll);
+			}
 			Integer spread = (Integer)(ll.Log_Stop_Order__c - ll.Log_Start_Order__c);
 			List<Limit_Log__c> spreadList = limitLogBySpread.get(spread);
 			if(spreadList == null) { 
@@ -290,12 +300,17 @@ public class LimitLogger {
 						} 
 						if(superLog.Log_Stop_Order__c <= subLog.Log_Stop_Order__c) {
 							continue; //
-						} 
-						subLog.Wrapper_Limit_Log__c = superLog.Id;
+						}
+						//known issue - will update even if it doesn't need to due to the way it loops through the super / sub set
+						if(subLog.Wrapper_Limit_Log__c != superLog.Id) { 
+							subLog.Wrapper_Limit_Log__c = superLog.Id;
+							toUpdateMap.put(subLog.Id, subLog);
+						}
 					}
 				}
 			}
 		}
+		return toUpdateMap.values();
 	}
 	/**
 	*  Initializes the limit log record
@@ -415,7 +430,7 @@ public class LimitLogger {
 	*/
 	private void addLogToList() {
 		if(commitLogs) {
-			records.add(record);
+			uncommittedRecords.add(record);
 		}
 	}
 	
@@ -441,7 +456,8 @@ public class LimitLogger {
 	} set;}
 	
 	//running list of Limit_Logs__c to commit later
-	private static List<Limit_Log__c> records = new List<Limit_Log__c>();
+	private static List<Limit_Log__c> uncommittedRecords = new List<Limit_Log__c>();
+	private static List<Limit_Log__c> allWorkingRecords = new List<Limit_Log__c>();
 
 	// static variable used to keep track of whether or not the initial log is the one being stopped or not
 	private static LimitLogger initialLog {get; set{

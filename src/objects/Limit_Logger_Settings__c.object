@@ -3,6 +3,16 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Auto_Commit_When_Initial_Is_Stopped__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Auto commit the logs when the initial log is stopped. Without this being set to true, you must call the &quot;commitAll&quot; method in order to commit the logs.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Auto commit the logs when the initial log is stopped. Without this being set to true, you must call the &quot;commitAll&quot; method in order to commit the logs.</inlineHelpText>
+        <label>Auto Commit When Initial Is Stopped</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Commit_Logs_To_Database__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
