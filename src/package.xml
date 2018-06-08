@@ -17,6 +17,10 @@
         <name>ApexTrigger</name>
     </types>
     <types>
+        <members>CustomLabels</members>
+        <name>CustomLabels</name>
+    </types>
+    <types>
         <members>Limit_Log__c</members>
         <members>Limit_Logger_Settings__c</members>
         <name>CustomObject</name>
