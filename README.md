@@ -4,13 +4,18 @@
   <img alt="Deploy to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png" width="100">
 </a> 
-        <img alt='Build Status' 
-             src='http://ec2-18-221-14-184.us-east-2.compute.amazonaws.com:8080/buildStatus/icon?job=limitlogger' width="100" />
+       <!-- <img alt='Build Status' 
+             src='http://ec2-18-221-14-184.us-east-2.compute.amazonaws.com:8080/buildStatus/icon?job=limitlogger' width="100" /> -->
 
   </p>
+ 
 
 # Summary
 Problem Statement: ever had problems figuring out which methods or classes were eating up your governor limits? So you turn up the debug logs to see what's going on and it consume more CPU time. The more logs you have open the slower your browser gets. After 200-300 MBs of logs, the whole browser chokes up and takes forever to read or parse the logs. Out of the repeated pains of diagnosing CPU time limits was born a light weight utility for creating Limit Logs. Each limit log shows the their contribution towards governor limits, as well as the cumulative governor limits. 
+
+Wouldn’t it be nice to see where your limits are? What each operation took from your available resources? Well now you can with this lightweight utility.
+
+<img src=http://timbarsotti.com/wp-content/uploads/2018/12/Limit_Log__LL-0000124___Salesforce_-_Developer_Edition-1024x976.png />
 
 If LimitLogger is enabled, each LimitLogger that is constructed will create a Limit_Log__c record. 
 
