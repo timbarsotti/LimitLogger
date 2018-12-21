@@ -15,7 +15,7 @@ Problem Statement: ever had problems figuring out which methods or classes were 
 
 Wouldn’t it be nice to see where your limits are? What each operation took from your available resources? Well now you can with this lightweight utility.
 
-<img src=http://timbarsotti.com/wp-content/uploads/2018/12/Limit_Log__LL-0000124___Salesforce_-_Developer_Edition-1024x976.png />
+<img src=http://timbarsotti.com/wp-content/uploads/2018/12/Limit_Log__LL-0000124___Salesforce_-_Developer_Edition-2-1024x976.png />
 
 If LimitLogger is enabled, each LimitLogger that is constructed will create a Limit_Log__c record. 
 
