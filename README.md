@@ -55,12 +55,12 @@ public void methodOne() {
 
 public void methodTwo() {
     //construct second log
-    LimitLogger secondLog = new LimitLogger('My Seconc Log'); 
+    LimitLogger secondLog = new LimitLogger('My Second Log'); 
     //stop and commit - doesn't commit logs here because the inital wasn't stopped
     secondLog.stop();
 
     //if you have Auto Commit set to false - you will need to call commit all explicitly 
-    //NOTE: this won't do anything because the initial log has has been stopped.
+    //NOTE: this won't do anything because the initial log has not been stopped.
     secondLog.commitAll(); 
 }
 ```
