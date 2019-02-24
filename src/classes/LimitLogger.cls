@@ -24,6 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 public class LimitLogger {
+	/* Constructors */
 	/**
 	* Constructs a new LimitLogger
 	*
@@ -58,6 +59,28 @@ public class LimitLogger {
 			initializeLimitLogRecord();
 		}
 	}
+
+	/* inner classes */
+	public class LimitLoggerException extends Exception {}
+	
+	//if the Debug_Limits__c is true, then the logs are printed in the debug logs
+	//custom setter allows programmatic overrides
+	public static Boolean debugLogs { get {
+		if(debugLogs == null) {
+			debugLogs = limitLoggerSettings.Debug_Limits__c;
+		}
+		return debugLogs;
+	} set;}
+
+	//if the Commit_Logs_To_Database__c is true, then the logs are saved to the database when the initially constructed limit log is stopped
+	//custom setter allows programmatic overrides
+	public static Boolean commitLogs { get {
+		if(commitLogs == null) {
+			commitLogs = limitLoggerSettings.Commit_Logs_To_Database__c;
+		}
+		return commitLogs;
+	} set;}
+
 	/* Attributes */ 
 	//if log has stopped already, then don't allow stopping again
 	private Boolean stopped {
@@ -192,9 +215,64 @@ public class LimitLogger {
 			return LIMITS.getSoslQueries();
 		}
 	}
-
+	private Boolean triggerIsExecuting {get; set;}
+	private Integer triggerSize {get; set;}
+	private Set<String> triggerContext {get; set;}
 	private Long startTime;
 	private Integer endTime;
+
+	/* Statics */
+	//running list of Limit_Logs__c to commit later
+	private static List<Limit_Log__c> uncommittedRecords = new List<Limit_Log__c>();
+	private static List<Limit_Log__c> allWorkingRecords = new List<Limit_Log__c>();
+
+	// static variable used to keep track of whether or not the initial log is the one being stopped or not
+	private static LimitLogger initialLog {get; set{
+		if(value == null) {
+			initialLog = null;
+		} else {
+			if(initialLog == null) {
+				initialLog = value;
+			}
+		}
+	}}
+
+	/** Custom setting derives if the limit logger is enabled. 
+	 * if neither checkbox is enabled, nothing happens. 
+	 * if the Debug_Limits__c is true, then the logs are printed in the debug logs
+	 * if the Commit_Logs_To_Database__c is true, then the logs are saved to the database when the initially constructed limit log is stopped
+	 */
+	private static Limit_Logger_Settings__c limitLoggerSettings = Limit_Logger_Settings__c.getInstance();
+	
+	private static Integer limitAggregateQueries = LIMITS.getLimitAggregateQueries();
+	private static Integer limitAsyncCalls = LIMITS.getLimitAsyncCalls();
+	private static Integer limitCallouts = LIMITS.getLimitCallouts();
+	private static Integer limitCpuTime = LIMITS.getLimitCpuTime();
+	private static Integer limitDMLRows = LIMITS.getLimitDMLRows();
+	private static Integer limitDMLStatements = LIMITS.getLimitDMLStatements();
+	private static Integer limitEmailInvocations = LIMITS.getLimitEmailInvocations();
+	private static Integer limitFutureCalls = LIMITS.getLimitFutureCalls();
+	private static Integer limitHeapSize = LIMITS.getLimitHeapSize();
+	private static Integer limitMobilePushApexCalls = LIMITS.getLimitMobilePushApexCalls();
+	private static Integer limitQueries = LIMITS.getLimitQueries();
+	private static Integer limitQueryLocatorRows = LIMITS.getLimitQueryLocatorRows();
+	private static Integer limitQueryRows = LIMITS.getLimitQueryRows();
+	private static Integer limitQueueableJobs = LIMITS.getLimitQueueableJobs();
+	private static Integer limitSoslQueries = LIMITS.getLimitSoslQueries();
+	private static Boolean queueable = System.isQueueable();
+	private static Boolean future = System.isFuture();
+	private static Boolean scheduled = System.isScheduled();
+	private static Boolean batchable = System.isBatch();
+	//if limit logger is not set to debugLogs or commitLogs, nothing happens. 
+	private static Boolean limitLoggerEnabled { get{ 
+		return (commitLogs || debugLogs);
+	}}
+
+	// transaction number will be shared by all records of the same execution context
+	private static Double transactionNumber = Math.random() * 10000000;
+	private static Integer logStartOrder = 0;
+	private static Integer logStopOrder = 0;
+
 	/* Methods */
 
 	/**
@@ -210,29 +288,6 @@ public class LimitLogger {
 		if(limitLoggerSettings.Auto_Commit_When_Initial_Is_Stopped__c) {
 			commitAll();
 		}
-	}
-
-	/**
-	* Starts the current log and resets the initial values to zero
-	*/
-	private void start() {
-		if(!limitLoggerEnabled) { return;}
-		this.startTime 						= System.now().getTime();
-		this.initialAggregateQueries 		= LIMITS.getAggregateQueries();
-		this.initialAsyncCalls 				= LIMITS.getAsyncCalls();
-		this.initialCallouts 				= LIMITS.getCallouts();
-		this.initialCpuTime 				= LIMITS.getCpuTime();
-		this.initialDMLRows 				= LIMITS.getDMLRows();
-		this.initialDMLStatements 			= LIMITS.getDMLStatements();
-		this.initialEmailInvocations 		= LIMITS.getEmailInvocations();
-		this.initialFutureCalls 			= LIMITS.getFutureCalls();
-		this.initialHeapSize 				= LIMITS.getHeapSize();
-		this.initialMobilePushApexCalls 	= LIMITS.getMobilePushApexCalls();
-		this.initialQueries 				= LIMITS.getQueries();
-		this.initialQueryLocatorRows 		= LIMITS.getQueryLocatorRows();
-		this.initialQueryRows 				= LIMITS.getQueryRows();
-		this.initialQueueableJobs 			= LIMITS.getQueueableJobs();
-		this.initialSoslQueries 			= LIMITS.getSoslQueries();
 	}
 
 	/**
@@ -270,6 +325,35 @@ public class LimitLogger {
 			}
 		}
 	}
+
+	/**
+	* Starts the current log and resets the initial values to zero
+	*/
+	private void start() {
+		if(!limitLoggerEnabled) { return;}
+		this.startTime 						= System.now().getTime();
+		this.initialAggregateQueries 		= LIMITS.getAggregateQueries();
+		this.initialAsyncCalls 				= LIMITS.getAsyncCalls();
+		this.initialCallouts 				= LIMITS.getCallouts();
+		this.initialCpuTime 				= LIMITS.getCpuTime();
+		this.initialDMLRows 				= LIMITS.getDMLRows();
+		this.initialDMLStatements 			= LIMITS.getDMLStatements();
+		this.initialEmailInvocations 		= LIMITS.getEmailInvocations();
+		this.initialFutureCalls 			= LIMITS.getFutureCalls();
+		this.initialHeapSize 				= LIMITS.getHeapSize();
+		this.initialMobilePushApexCalls 	= LIMITS.getMobilePushApexCalls();
+		this.initialQueries 				= LIMITS.getQueries();
+		this.initialQueryLocatorRows 		= LIMITS.getQueryLocatorRows();
+		this.initialQueryRows 				= LIMITS.getQueryRows();
+		this.initialQueueableJobs 			= LIMITS.getQueueableJobs();
+		this.initialSoslQueries 			= LIMITS.getSoslQueries();
+		this.triggerIsExecuting				= Trigger.isExecuting;
+		if(Trigger.isExecuting) {
+			this.triggerSize 				= Trigger.size;
+			this.triggerContext				= new Set<String>{String.valueOf(trigger.operationType)};
+		}
+	}
+
 	private List<Limit_Log__c> setParentChildRelations(List<Limit_Log__c> records) {
 		Map<Id, Limit_Log__c> toUpdateMap = new Map<Id, Limit_Log__c>();
 		Map<Integer, List<Limit_Log__c>> limitLogBySpread = new Map<Integer, List<Limit_Log__c>>();
@@ -319,7 +403,6 @@ public class LimitLogger {
 	*  Initializes the limit log record
 	*/
 	private void initializeLimitLogRecord() {
-
 		this.record = new Limit_Log__c(
 			Log_Start_Order__c 				= logStartOrder,
 			Event_Name__c 					= eventName,
@@ -346,25 +429,6 @@ public class LimitLogger {
 		);
 	}
 
-	private static Integer limitAggregateQueries = LIMITS.getLimitAggregateQueries();
-	private static Integer limitAsyncCalls = LIMITS.getLimitAsyncCalls();
-	private static Integer limitCallouts = LIMITS.getLimitCallouts();
-	private static Integer limitCpuTime = LIMITS.getLimitCpuTime();
-	private static Integer limitDMLRows = LIMITS.getLimitDMLRows();
-	private static Integer limitDMLStatements = LIMITS.getLimitDMLStatements();
-	private static Integer limitEmailInvocations = LIMITS.getLimitEmailInvocations();
-	private static Integer limitFutureCalls = LIMITS.getLimitFutureCalls();
-	private static Integer limitHeapSize = LIMITS.getLimitHeapSize();
-	private static Integer limitMobilePushApexCalls = LIMITS.getLimitMobilePushApexCalls();
-	private static Integer limitQueries = LIMITS.getLimitQueries();
-	private static Integer limitQueryLocatorRows = LIMITS.getLimitQueryLocatorRows();
-	private static Integer limitQueryRows = LIMITS.getLimitQueryRows();
-	private static Integer limitQueueableJobs = LIMITS.getLimitQueueableJobs();
-	private static Integer limitSoslQueries = LIMITS.getLimitSoslQueries();
-	private static Boolean queueable = System.isQueueable();
-	private static Boolean future = System.isFuture();
-	private static Boolean scheduled = System.isScheduled();
-	private static Boolean batchable = System.isBatch();
 	/**
 	*  Updates the log with the current and cumulative usage
 	*/
@@ -416,6 +480,16 @@ public class LimitLogger {
 		
 		record.Records_Processed__c 					= sObjectList != null ? sObjectList.size() : null;
 		record.Time__c 									= System.now().getTime() - startTime;
+
+		record.Trigger_Is_Executing__c 					= triggerIsExecuting;
+		if(Trigger.isExecuting) {
+			triggerContext.add(String.valueOf(Trigger.operationType));
+			record.Trigger_Size__c						= triggerSize;
+			for(String context: triggerContext) {
+				record.Trigger_Contexts__c = context + ';';	
+			}
+		}
+
 	}
 	/**
 	*  Prints the record fields in the debug log
@@ -436,57 +510,4 @@ public class LimitLogger {
 			uncommittedRecords.add(record);
 		}
 	}
-	
-	/* inner classes */
-	public class LimitLoggerException extends Exception {}
-	
-	//if the Debug_Limits__c is true, then the logs are printed in the debug logs
-	//custom setter allows programmatic overrides
-	public static Boolean debugLogs { get {
-		if(debugLogs == null) {
-			debugLogs = limitLoggerSettings.Debug_Limits__c;
-		}
-		return debugLogs;
-	} set;}
-
-	//if the Commit_Logs_To_Database__c is true, then the logs are saved to the database when the initially constructed limit log is stopped
-	//custom setter allows programmatic overrides
-	public static Boolean commitLogs { get {
-		if(commitLogs == null) {
-			commitLogs = limitLoggerSettings.Commit_Logs_To_Database__c;
-		}
-		return commitLogs;
-	} set;}
-	
-	//running list of Limit_Logs__c to commit later
-	private static List<Limit_Log__c> uncommittedRecords = new List<Limit_Log__c>();
-	private static List<Limit_Log__c> allWorkingRecords = new List<Limit_Log__c>();
-
-	// static variable used to keep track of whether or not the initial log is the one being stopped or not
-	private static LimitLogger initialLog {get; set{
-		if(value == null) {
-			initialLog = null;
-		} else {
-			if(initialLog == null) {
-				initialLog = value;
-			}
-		}
-	}}
-
-	/** Custom setting derives if the limit logger is enabled. 
-	 * if neither checkbox is enabled, nothing happens. 
-	 * if the Debug_Limits__c is true, then the logs are printed in the debug logs
-	 * if the Commit_Logs_To_Database__c is true, then the logs are saved to the database when the initially constructed limit log is stopped
-	 */
-	private static Limit_Logger_Settings__c limitLoggerSettings = Limit_Logger_Settings__c.getInstance();
-	
-	//if limit logger is not set to debugLogs or commitLogs, nothing happens. 
-	private static Boolean limitLoggerEnabled { get{ 
-		return (commitLogs || debugLogs);
-	}}
-
-	// transaction number will be shared by all records of the same execution context
-	private static Double transactionNumber = Math.random() * 10000000;
-	private static Integer logStartOrder = 0;
-	private static Integer logStopOrder = 0;
 }

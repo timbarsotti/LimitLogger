@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-     <types>
-        <members>*</members>
+    <types>
+        <members>ErrorLogUtil</members>
+        <members>ErrorLogUtilTest</members>
+        <members>LimitLogger</members>
+        <members>LimitLoggerTest</members>
+        <members>TriggerHandler</members>
+        <members>TriggerHandlerTest</members>
         <name>ApexClass</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexComponent</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexPage</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexTrigger</name>
     </types>
     <types>
         <members>CustomLabels</members>
         <name>CustomLabels</name>
     </types>
     <types>
+        <members>Error_Log__c</members>
         <members>Limit_Log__c</members>
         <members>Limit_Logger_Settings__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Limit_Log__c</members>
+        <members>*</members>
         <name>CustomTab</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Error_Log__c-Error Log Layout</members>
+        <members>Limit_Log__c-Limit Log Layout</members>
         <name>Layout</name>
     </types>
     <types>

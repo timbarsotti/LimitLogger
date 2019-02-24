@@ -1,9 +1,5 @@
 @isTest
 public class LimitLoggerTest {
-	//TODO - test custom setting
-
-	//TODO - test multiple stops, test sub stops
-
 	@isTest
 	public static void testNestedStops() {
 		LimitLogger.commitLogs = true;
@@ -34,7 +30,7 @@ public class LimitLoggerTest {
 		ll.stop();
 
 		try {
-			//ll.start(); -- deprecated
+
 		} catch (LimitLogger.LimitLoggerException lle) {
 			startError = true;
 		}
