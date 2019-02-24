@@ -90,19 +90,26 @@ If you want to execute a block of code and have it generate the logs without ena
 A lightweight class to commit errors to the database. All errors will be persisted to the database by invoking ErrorLog.commitLogs();
 
 # Public methods available 
+```javascript
 ErrorLogUtil.commitLogs()  // this method commits the logs to the database. Call it after webservice callouts or after triggers have run.
+```
 
-# Logging Webservice Callouts
+# Webservice Callouts 
+```javascript
 ErrorLogUtil.log(HttpResponse response) 
 ErrorLogUtil.log(String message, HttpResponse response) 
+```
 
-# Logging Exceptions 
+# Exceptions 
+```javascript
 ErrorLogUtil.log(Exception e) 
 ErrorLogUtil.log(String message, Exception e) 
 ErrorLogUtil.log(DmlException e) 
 ErrorLogUtil.log(String message, DmlException e)
+```
 
-# Logging Save Results 
+# Save Results 
+```javascript
 ErrorLogUtil.log(Database.SaveResult sr) 
 ErrorLogUtil.log(List<Database.SaveResult> srList) 
 ErrorLogUtil.log(String message, Database.SaveResult sr) 
@@ -112,8 +119,10 @@ ErrorLogUtil.handleSaveResults(Database.SaveResult sr)
 ErrorLogUtil.handleSaveResults(String message, Database.SaveResult sr) 
 ErrorLogUtil.handleSaveResults(List<Database.SaveResult> srList) 
 ErrorLogUtil.handleSaveResults(String errorMessage, List<Database.SaveResult> srList) 
+```
 
-# Logging Upsert Results
+# Upsert Results 
+```javascript
 ErrorLogUtil.handleSaveResults(Database.UpsertResult ur) 
 ErrorLogUtil.handleSaveResults(String message, Database.UpsertResult ur) 
 ErrorLogUtil.handleSaveResults(List<Database.UpsertResult> urList) 
@@ -123,8 +132,10 @@ ErrorLogUtil.log(Database.UpsertResult ur)
 ErrorLogUtil.log(List<Database.UpsertResult> urList) 
 ErrorLogUtil.log(String message, Database.UpsertResult ur) 
 ErrorLogUtil.log(String message, List<Database.UpsertResult> urList) 
+```
 
-# Example Implementation of Error Logger  
+# Example Implementation *
+```javascript
 try {
 
 } catch (AsyncException e) {
@@ -138,8 +149,6 @@ try {
 } catch (ExternalObjectException e) {
   log(e); //OR log('developer message', e);
 } catch (InvalidParameterValueException e) {
-  log(e); //OR log('developer message', e);
-} catch (LimitException e) {
   log(e); //OR log('developer message', e);
 } catch (JSONException e) {
   log(e); //OR log('developer message', e);
@@ -177,9 +186,5 @@ try {
   log(e); //OR log('developer message', e);
 } catch (Exception e) {
   log(e); //OR log('developer message', e);
-}
-
-
-# TODO Improvement List
-- [ ] Add permission set for objects / fields
-- [ ] Add Delete Result methods
+} 
+```

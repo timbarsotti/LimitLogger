@@ -58,11 +58,11 @@ public class ErrorLogUtilTest extends ErrorLogUtil {
 
 		log(Database.insert(a, false));
 		System.assertEquals(17, ErrorLogUtil.errorLogs.size());
-	    log('String message', Database.insert(new List<Account>{a, a2}, false));
-	    System.assertEquals(19, ErrorLogUtil.errorLogs.size());
-	    log(Database.upsert(new List<Account>{a, a2}, false));
-	    System.assertEquals(20, ErrorLogUtil.errorLogs.size());
-	    log('String message', Database.upsert(new List<Account>{a, a2}, false));
+		log('String message', Database.insert(new List<Account>{a, a2}, false));
+		System.assertEquals(19, ErrorLogUtil.errorLogs.size());
+		log(Database.upsert(new List<Account>{a, a2}, false));
+		System.assertEquals(20, ErrorLogUtil.errorLogs.size());
+		log('String message', Database.upsert(new List<Account>{a, a2}, false));
 		System.assertEquals(21, ErrorLogUtil.errorLogs.size());
 		commitLogs();
 
