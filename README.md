@@ -15,6 +15,9 @@ Problem Statement: ever had problems figuring out which methods or classes were 
 
 Wouldn’t it be nice to see where your limits are? What each operation took from your available resources? Well now you can with this lightweight utility.
 
+# Notes 
+Also includes nested into trigger framework and error handling util
+
 <img src=http://timbarsotti.com/wp-content/uploads/2018/12/Limit_Log__LL-0000124___Salesforce_-_Developer_Edition-2-1024x976.png />
 
 If LimitLogger is enabled, each LimitLogger that is constructed will create a Limit_Log__c record. 
@@ -82,5 +85,101 @@ If you want to execute a block of code and have it generate the logs without ena
   //if you have Auto Commit set to false - you will need to call commit all explicitly 
   intialLog.commitAll(); 
 ```
+
+# ErrorLogUtil
+A lightweight class to commit errors to the database. All errors will be persisted to the database by invoking ErrorLog.commitLogs();
+
+# Public methods available 
+ErrorLogUtil.commitLogs()  // this method commits the logs to the database. Call it after webservice callouts or after triggers have run.
+
+# Logging Webservice Callouts
+ErrorLogUtil.log(HttpResponse response) 
+ErrorLogUtil.log(String message, HttpResponse response) 
+
+# Logging Exceptions 
+ErrorLogUtil.log(Exception e) 
+ErrorLogUtil.log(String message, Exception e) 
+ErrorLogUtil.log(DmlException e) 
+ErrorLogUtil.log(String message, DmlException e)
+
+# Logging Save Results 
+ErrorLogUtil.log(Database.SaveResult sr) 
+ErrorLogUtil.log(List<Database.SaveResult> srList) 
+ErrorLogUtil.log(String message, Database.SaveResult sr) 
+ErrorLogUtil.log(String message, List<Database.SaveResult> srList) 
+
+ErrorLogUtil.handleSaveResults(Database.SaveResult sr) 
+ErrorLogUtil.handleSaveResults(String message, Database.SaveResult sr) 
+ErrorLogUtil.handleSaveResults(List<Database.SaveResult> srList) 
+ErrorLogUtil.handleSaveResults(String errorMessage, List<Database.SaveResult> srList) 
+
+# Logging Upsert Results
+ErrorLogUtil.handleSaveResults(Database.UpsertResult ur) 
+ErrorLogUtil.handleSaveResults(String message, Database.UpsertResult ur) 
+ErrorLogUtil.handleSaveResults(List<Database.UpsertResult> urList) 
+ErrorLogUtil.handleSaveResults(String message, List<Database.UpsertResult> urList) 
+
+ErrorLogUtil.log(Database.UpsertResult ur) 
+ErrorLogUtil.log(List<Database.UpsertResult> urList) 
+ErrorLogUtil.log(String message, Database.UpsertResult ur) 
+ErrorLogUtil.log(String message, List<Database.UpsertResult> urList) 
+
+# Example Implementation of Error Logger  
+try {
+
+} catch (AsyncException e) {
+  log(e); //OR log('developer message', e);
+} catch (BigObjectException e) {
+  log(e); //OR log('developer message', e);
+} catch (CalloutException e) {
+  log(e); //OR log('developer message', e);
+} catch (EmailException e) {
+  log(e); //OR log('developer message', e);
+} catch (ExternalObjectException e) {
+  log(e); //OR log('developer message', e);
+} catch (InvalidParameterValueException e) {
+  log(e); //OR log('developer message', e);
+} catch (LimitException e) {
+  log(e); //OR log('developer message', e);
+} catch (JSONException e) {
+  log(e); //OR log('developer message', e);
+} catch (ListException e) {
+  log(e); //OR log('developer message', e);
+} catch (MathException e) {
+  log(e); //OR log('developer message', e);
+} catch (NoAccessException e) {
+  log(e); //OR log('developer message', e);
+} catch (NoDataFoundException e) {
+  log(e); //OR log('developer message', e);
+} catch (NoSuchElementException e) {
+  log(e); //OR log('developer message', e);
+} catch (NullPointerException e) {
+  log(e); //OR log('developer message', e);
+} catch (QueryException e) {
+  log(e); //OR log('developer message', e);
+} catch (RequiredFeatureMissingException e) {
+  log(e); //OR log('developer message', e);
+} catch (SearchException e) {
+  log(e); //OR log('developer message', e);
+} catch (SecurityException e) {
+  log(e); //OR log('developer message', e);
+} catch (SerializationException e) {
+  log(e); //OR log('developer message', e);
+} catch (SObjectException e) {
+  log(e); //OR log('developer message', e);
+} catch (StringException e) {
+  log(e); //OR log('developer message', e);
+} catch (TypeException e) {
+  log(e); //OR log('developer message', e);
+} catch (VisualforceException e) {
+  log(e); //OR log('developer message', e);
+} catch (XmlException e) {
+  log(e); //OR log('developer message', e);
+} catch (Exception e) {
+  log(e); //OR log('developer message', e);
+}
+
+
 # TODO Improvement List
-1) Add permission set for objects / fields
+- [ ] Add permission set for objects / fields
+- [ ] Add Delete Result methods
